@@ -20,7 +20,68 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [
+    Users,
+    Media, // Department Head Messages
+    {
+      slug: 'notices',
+      admin: {
+        useAsTitle: 'title',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'date',
+          type: 'date',
+          required: true,
+        },
+        {
+          name: 'content',
+          type: 'textarea',
+          required: true,
+        },
+      ],
+    },
+    // Events
+    {
+      slug: 'events',
+      admin: {
+        useAsTitle: 'title',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'startDate',
+              type: 'date',
+              required: true,
+            },
+            {
+              name: 'endDate',
+              type: 'date',
+              required: false,
+            },
+          ],
+        },
+
+        {
+          name: 'description',
+          type: 'textarea',
+        },
+      ],
+    },
+    // Staff
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -31,6 +92,55 @@ export default buildConfig({
       url: process.env.DATABASE_URI || '',
     },
   }),
+  globals: [
+    {
+      slug: 'carousel',
+      fields: [
+        {
+          name: 'images',
+          type: 'array',
+          required: true,
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      slug: 'staff',
+      fields: [
+        {
+          name: 'staff',
+          type: 'array',
+          fields: [
+            {
+              name: 'name',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'position',
+              type: 'text',
+              required: true,
+            },
+            {
+              name: 'phone',
+              type: 'text',
+            },
+            {
+              name: 'department',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+    },
+  ],
   sharp,
   plugins: [
     payloadCloudPlugin(),
