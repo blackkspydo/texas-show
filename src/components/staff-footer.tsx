@@ -1,35 +1,20 @@
 export function StaffFooter({ staff }: { staff: any[] }) {
-  const groupedStaff = staff.reduce((acc, member) => {
-    if (!acc[member.department]) {
-      acc[member.department] = [];
-    }
-    acc[member.department].push(member);
-    return acc;
-  }, {} as Record<string, any[]>);
-
   return (
-    <footer className="bg-muted mt-8 py-6">
-      <div className="container grid grid-cols-1 md:grid-cols-3 gap-8">
-        {['head', 'academic', 'faculty'].map((dept) => (
-          <div key={dept} className="space-y-2">
-            <h3 className="font-bold capitalize">
-              {dept === 'head' ? 'Department Head' : 
-               dept === 'academic' ? 'Academic Coordinator' : 
-               'Full Time Faculty'}
-            </h3>
-            {groupedStaff[dept]?.map((member) => (
-              <div key={member.id} className="text-sm">
-                <p className="font-medium">{member.name}</p>
-                <p className="text-muted-foreground">{member.position}</p>
-                {member.phone && (
-                  <p className="text-muted-foreground">{member.phone}</p>
-                )}
-              </div>
-            ))}
+    <footer className="bg-muted fixed bottom-0 w-full p-4 mt-8">
+      <div className="grid grid-cols-1 place-content-center place-items-center md:grid-cols-10 gap-6">
+        {staff.slice(0, 10).map((member) => (
+          <div key={member.id}>
+            <div>
+              <p className="font-medium">{member.name}</p>
+              <p className="text-muted-foreground">{member.position}</p>
+              {member.phone && <p className="text-muted-foreground">{member.phone}</p>}
+            </div>
           </div>
         ))}
+      </div>
+      <div className="py-2 mt-4">
+        <p className="text-center text-muted-foreground">Build By Kishor Upadhyaya @ CSIT-2078</p>
       </div>
     </footer>
   )
 }
-

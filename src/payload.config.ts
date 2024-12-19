@@ -73,11 +73,6 @@ export default buildConfig({
             },
           ],
         },
-
-        {
-          name: 'description',
-          type: 'textarea',
-        },
       ],
     },
     // Staff
@@ -93,6 +88,16 @@ export default buildConfig({
     },
   }),
   globals: [
+    {
+      slug: 'marquee',
+      fields: [
+        {
+          name: 'marquee',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
     {
       slug: 'carousel',
       fields: [

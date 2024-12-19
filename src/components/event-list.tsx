@@ -1,37 +1,49 @@
 'use client'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Event } from '@/payload-types'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+export function EventList({ events, type }: { events: Event[]; type: 'activity' | 'upcoming' }) {
+  console.log(events)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-interface Event {
-  id: string
-  title: string
-  date: string
-  description?: string
-  type: 'activity' | 'upcoming'
-}
+  const filteredEvents = events
+    .filter((event) => {
+      const startDate = new Date(event.startDate)
+      const endDate = event.endDate ? new Date(event.endDate) : new Date(event.startDate)
+      startDate.setHours(0, 0, 0, 0)
+      endDate.setHours(0, 0, 0, 0)
 
-export function EventList({ events, type }: { events: Event[], type: 'activity' | 'upcoming' }) {
-  const filteredEvents = events.filter(event => event.type === type)
-  
+      if (type === 'activity') {
+        return today.getTime() >= startDate.getTime() && today.getTime() <= endDate.getTime()
+      } else {
+        return startDate.getTime() > today.getTime()
+      }
+    })
+    .slice(0, 6)
+
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
-        <CardTitle>{type === 'activity' ? "Today's Activities" : 'Upcoming Events'}</CardTitle>
+        <CardTitle className="text-2xl">
+          {type === 'activity' ? "Today's Activities" : 'Upcoming Events'}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {filteredEvents.map((event) => (
-          <div key={event.id} className="border-b pb-2 last:border-0">
-            <p className="font-medium">{event.title}</p>
-            <p className="text-sm text-muted-foreground">
-              {new Date(event.date).toLocaleDateString()}
-            </p>
-            {event.description && (
-              <p className="text-sm mt-1">{event.description}</p>
-            )}
-          </div>
-        ))}
+        {filteredEvents.length === 0 ? (
+          <p className="text-center text-gray-500">
+            {type === 'activity' ? "No Today's Activity" : 'No Upcoming Events'}
+          </p>
+        ) : (
+          <ul className="list-disc pl-4">
+            {filteredEvents.map((event) => (
+              <li key={event.id} className="border-b text-xl pb-2 last:border-0">
+                <p className="font-medium">{event.title}</p>
+              </li>
+            ))}
+          </ul>
+        )}
       </CardContent>
     </Card>
   )
 }
-

@@ -54,6 +54,7 @@ export default buildConfig({
         },
       ],
     },
+    
     // Events
     {
       slug: 'events',
@@ -61,6 +62,7 @@ export default buildConfig({
         useAsTitle: 'title',
       },
       fields: [
+       
         {
           name: 'title',
           type: 'text',

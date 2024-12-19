@@ -33,10 +33,12 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
+    marquee: Marquee;
     carousel: Carousel;
     staff: Staff;
   };
   globalsSelect: {
+    marquee: MarqueeSelect<false> | MarqueeSelect<true>;
     carousel: CarouselSelect<false> | CarouselSelect<true>;
     staff: StaffSelect<false> | StaffSelect<true>;
   };
@@ -124,7 +126,6 @@ export interface Event {
   title: string;
   startDate: string;
   endDate?: string | null;
-  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -245,7 +246,6 @@ export interface EventsSelect<T extends boolean = true> {
   title?: T;
   startDate?: T;
   endDate?: T;
-  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -283,6 +283,16 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marquee".
+ */
+export interface Marquee {
+  id: number;
+  marquee: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "carousel".
  */
 export interface Carousel {
@@ -311,6 +321,16 @@ export interface Staff {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "marquee_select".
+ */
+export interface MarqueeSelect<T extends boolean = true> {
+  marquee?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
