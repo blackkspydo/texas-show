@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "3444:3000"    
     volumes:
       - ./texas-show.db:/app/texas-show.db # Mount SQLite database for persistence
     environment:
