@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import Marquee from '@/components/ui/marquee'
 import Image from 'next/image'
+import { Media, Staff } from '@/payload-types'
 
 async function getData() {
   const payload = await getPayload({ config })
@@ -26,14 +27,13 @@ async function getData() {
       depth: 1,
     }),
   ])
-  console.log({
-    carousel: carousel.images,
-    notices: notices.docs,
-    events: events.docs,
-    staff: staff.staff,
-  })
+
   return {
-    messages: carousel.images?.map((image) => ({ image: image.image.url })),
+    messages: carousel.images?.map((image) => ({
+      image: (image.image as Media).url,
+    })) as unknown as {
+      image: string
+    }[],
     notices: notices.docs,
     events: events.docs,
     staff: staff.staff,
@@ -76,7 +76,7 @@ export default async function Page() {
       <Marquee repeat={1000} className="w-full  bg-yellow-300 [--duration:10s]">
         {data.marquee}
       </Marquee>
-      <StaffFooter staff={data.staff} />
+      {data.staff && <StaffFooter staff={data.staff} />}
     </div>
   )
 }

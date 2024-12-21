@@ -1,8 +1,10 @@
-export function StaffFooter({ staff }: { staff: any[] }) {
+import { Staff } from '@/payload-types'
+
+export function StaffFooter({ staff }: { staff: Staff['staff'] }) {
   return (
     <footer className="bg-muted fixed bottom-0 w-full p-4 mt-8">
       <div className="grid grid-cols-1 place-content-center place-items-center md:grid-cols-10 gap-6">
-        {staff.slice(0, 10).map((member) => (
+        {staff?.slice(0, 10).map((member) => (
           <div key={member.id}>
             <div>
               <p className="font-medium">{member.name}</p>

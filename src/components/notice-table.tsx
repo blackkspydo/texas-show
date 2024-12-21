@@ -8,13 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Notice } from '@/payload-types';
 
-interface Notice {
-  id: string
-  title: string
-  date: string
-  content: string
-}
+
 
 export function NoticeTable({ notices }: { notices: Notice[] }) {
   const emptyRows = Array(6 - notices.length).fill(null)

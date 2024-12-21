@@ -136,10 +136,12 @@ export default buildConfig({
             {
               name: 'phone',
               type: 'text',
+              required: true,
             },
             {
               name: 'department',
               type: 'text',
+              required: true,
             },
           ],
         },
