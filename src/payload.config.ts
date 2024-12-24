@@ -39,11 +39,6 @@ export default buildConfig({
           type: 'date',
           required: true,
         },
-        {
-          name: 'content',
-          type: 'textarea',
-          required: true,
-        },
       ],
     },
     // Events
